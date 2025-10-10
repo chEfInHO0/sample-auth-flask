@@ -1,7 +1,7 @@
-
-from flask import Flask
+import datetime
+from flask import Flask, request, jsonify
 from models import db, User
-
+from controllers.userController import userController
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +16,18 @@ def create_app():
         user_count = db.session.execute(db.select(User)).scalars().all()
         return f"Home. Total de usuários no DB: {len(user_count)}"
 
+    @app.route('/', methods=["POST"])
+    def _home():
+        print(request.method)
+        return ''
+    
+    @app.route('/test',methods=["POST"])
+    def test():
+        controller = userController()
+        print(request.get_json())
+        controller.create(**request.get_json())
+        return 'testando'
+        
     return app
 
 
