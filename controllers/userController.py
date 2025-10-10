@@ -1,7 +1,7 @@
 from flask import jsonify
 from sqlalchemy.orm import Session
 from models import db, User
-from utils.db_helper import commit_session
+from utils.db_helper import commit_session, fetch_all
 
 class userController:
     def create(self,**kwargs):
@@ -14,7 +14,16 @@ class userController:
         else:
             return jsonify({"message":error}),400
     def read(self):
-        pass
+        users, error = fetch_all(User)
+        if error:
+            return jsonify({"error": error}), 400
+
+        return jsonify([{
+            "id": u.id,
+            "name": u.name,
+            "email": u.email,
+            "is_adm": u.is_adm
+        } for u in users]), 200
     def update(self):
         pass
     def update_(self):
