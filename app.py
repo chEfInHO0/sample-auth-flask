@@ -21,12 +21,18 @@ def create_app():
         print(request.method)
         return ''
     
-    @app.route('/test',methods=["POST"])
+    @app.route('/test',methods=["GET"])
     def test():
         controller = userController()
-        print(request.get_json())
-        controller.create(**request.get_json())
-        return 'testando'
+        res = controller.read()
+        return res
+    
+    @app.route('/test',methods=["POST"])
+    def test_():
+        controller = userController()
+        res = controller.create(**request.get_json())
+        return res 
+    
         
     return app
 
