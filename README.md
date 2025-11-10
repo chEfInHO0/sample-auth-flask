@@ -1,14 +1,17 @@
+
 <div align="center">
+
+[Check the current state of the project here!](https://github.com/chEfInHO0/sample-auth-flask/tree/dev)
 
 # 🔐 Flask Auth Demo
 
-Uma aplicação simples de autenticação desenvolvida com **Flask** e **SQLite**, demonstrando o processo completo de **registro e login de usuários** com boas práticas de arquitetura, validação e tratamento de erros no backend.
+A simple **authentication demo** built with **Flask** and **SQLite**, showcasing the complete process of **user registration and login** with best practices in **backend architecture**, **validation**, and **error handling**.
 
 ---
 
-![Python](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python\&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-2.x-black?logo=flask)
-![SQLite](https://img.shields.io/badge/SQLite-Database-07405e?logo=sqlite&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Database-07405e?logo=sqlite\&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-red)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-Active-success)
@@ -17,75 +20,77 @@ Uma aplicação simples de autenticação desenvolvida com **Flask** e **SQLite*
 
 ---
 
-## 🚀 Sobre o Projeto
+## 🚀 About the Project
 
-Este projeto é uma **demo de autenticação com Flask**, ideal para quem deseja compreender o fluxo completo de **cadastro, login e manipulação de banco de dados** com **tratamento de erros personalizado** e **estrutura limpa e modular**.
+This project is a **Flask-based authentication demo**, designed to illustrate the full workflow of **user registration, authentication, and database management**, using **a clean modular architecture** and **custom SQL error handling**.
 
-O foco está na clareza e na organização, simulando uma base sólida para projetos de APIs REST.
-
----
-
-## 🧠 Funcionalidades
-
-✅ Registro de usuários  
-✅ Login com verificação de credenciais  
-✅ Hash seguro de senhas  
-✅ Middleware para tratamento de erros SQL  
-✅ Logging detalhado de exceções  
-✅ Estrutura modular e escalável  
+The main goal is to demonstrate how to structure a maintainable backend API with solid foundations for scaling or integrating with front-end frameworks like React or Vue.
 
 ---
 
-## 🧩 Tecnologias Utilizadas
+## 🧠 Features
 
-| Categoria | Tecnologias |
-|------------|--------------|
-| **Linguagem** | Python 3.12+ |
-| **Framework Web** | Flask |
-| **Banco de Dados** | SQLite |
-| **ORM** | SQLAlchemy |
-| **Validação** | Pydantic |
-| **Migrações** | Flask-Migrate |
-| **Logs** | Logging nativo do Python |
+✅ User registration
+✅ Login with credential verification
+✅ Secure password hashing
+✅ SQL error handling middleware
+✅ Centralized logging system
+✅ Modular and scalable architecture
 
 ---
 
-## 📂 Estrutura do Projeto
+## 🧩 Tech Stack
+
+| Category          | Technologies          |
+| ----------------- | --------------------- |
+| **Language**      | Python 3.12+          |
+| **Web Framework** | Flask                 |
+| **Database**      | SQLite                |
+| **ORM**           | SQLAlchemy            |
+| **Validation**    | Pydantic              |
+| **Migrations**    | Flask-Migrate         |
+| **Logs**          | Python Logging module |
+
+---
+
+## 📂 Project Structure
 
 ```bash
 sample-auth-flask/
 │
-├── app.py                # Ponto de entrada da aplicação Flask
-├── database.py           # Configuração e inicialização do banco
-├── db_init.py            # Script de criação inicial das tabelas
+├── logs/                 # Log files (runtime errors, events, etc.)
 │
-├── models/               # Modelos SQLAlchemy
-│   └── user_model.py
-│
-├── schemas/              # Schemas Pydantic para validação
-│   └── user_schema.py
-│
-├── middleware/           # Middlewares personalizados
+├── middleware/           # Custom middlewares
 │   └── sqlErrorHandler.py
 │
-├── routes/               # Rotas e controladores da API
-│   └── auth_routes.py
+├── models/               # SQLAlchemy models
+│   └── user_model.py
 │
-└── .env.example          # Exemplo de variáveis de ambiente
-````
+├── schemas/              # Pydantic schemas for validation
+│   └── user_schema.py
+│
+├── __init__.py           # Marks directory as a Python package
+├── .env.example          # Example environment configuration
+├── .gitignore            # Git ignore file
+├── app.py                # Flask application entry point
+├── database.py           # Database configuration and initialization
+├── db_init.py            # Script for initial table creation
+├── README.md             # Project documentation
+└── requirements.txt      # Project dependencies
+```
 
 ---
 
-## ⚙️ Como Executar o Projeto
+## ⚙️ How to Run the Project
 
-1. **Clone o repositório**
+1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/seuusuario/flask-auth-demo.git
+   git clone https://github.com/yourusername/flask-auth-demo.git
    cd flask-auth-demo
    ```
 
-2. **Crie e ative o ambiente virtual**
+2. **Create and activate a virtual environment**
 
    ```bash
    python -m venv venv
@@ -93,21 +98,46 @@ sample-auth-flask/
    venv\Scripts\activate     # Windows
    ```
 
-3. **Instale as dependências**
+3. **Install dependencies**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Configure o arquivo `.env`**
+4. **Set up your `.env` file**
+
+   Copy `.env.example` to `.env` and configure your environment variables:
 
    ```bash
-   FLASK_ENV=development
-   DATABASE_URL=sqlite:///auth.db
-   SECRET_KEY=sua_chave_secreta
+   cp .env.example .env
    ```
 
-5. **Inicie o servidor**
+   ### `.env.example`
+
+   ```env
+   # Flask secret key
+   SECRET_KEY="your_secret_key"
+
+   # Database connection string
+   SQLALCHEMY_DATABASE_URI="sqlite:///your_database.db"
+
+   # Session configuration
+   SESSION_COOKIE_HTTPONLY=True  # Protects cookies from client-side scripts
+   SESSION_COOKIE_SECURE=True    # Use False for local development
+   SESSION_COOKIE_SAMESITE="Lax"
+
+   # Remember-me configuration
+   REMEMBER_COOKIE_DURATION=7    # Days
+   REMEMBER_USER=True
+   ```
+
+5. **Initialize the database (if required)**
+
+   ```bash
+   python db_init.py
+   ```
+
+6. **Start the Flask server**
 
    ```bash
    flask run
@@ -115,14 +145,14 @@ sample-auth-flask/
 
 ---
 
-## 📬 Endpoints Principais
+## 📬 Main Endpoints
 
-| Método | Endpoint    | Descrição                    |
-| ------ | ----------- | ---------------------------- |
-| `POST` | `/register` | Cria um novo usuário         |
-| `POST` | `/login`    | Realiza o login e gera token |
+| Method | Endpoint    | Description              |
+| ------ | ----------- | ------------------------ |
+| `POST` | `/register` | Register a new user      |
+| `POST` | `/login`    | Authenticate and get JWT |
 
-**Exemplo de payload (registro):**
+**Example request (register):**
 
 ```json
 {
@@ -131,11 +161,11 @@ sample-auth-flask/
 }
 ```
 
-**Exemplo de resposta (erro tratado):**
+**Example response (handled error):**
 
 ```json
 {
-  "message": "E-mail já cadastrado.",
+  "message": "Email already registered.",
   "error": "UNIQUE constraint failed: users.email",
   "status_code": 409
 }
@@ -143,9 +173,9 @@ sample-auth-flask/
 
 ---
 
-## 🧾 Tratamento de Erros e Logs
+## 🧾 Error Handling & Logging
 
-O projeto inclui um **middleware de tratamento de erros SQL**, que intercepta exceções do banco e gera respostas JSON estruturadas, além de salvar os logs em arquivo e console.
+This project includes a **custom SQL error handler middleware** that intercepts database exceptions and returns structured JSON responses while also logging details to both file and console.
 
 ```python
 class SqlErrorHandler:
@@ -158,19 +188,21 @@ class SqlErrorHandler:
         return {"message": message, "status_code": code}
 ```
 
+Logs are automatically saved in the `/logs` directory.
+
 ---
 
 ## 🧭 Roadmap
 
-* [ ] Adicionar autenticação JWT
-* [ ] Implementar refresh tokens
-* [ ] Criar testes unitários com `pytest`
-* [ ] Adicionar CI/CD com GitHub Actions
-* [ ] Criar container com Docker
+* [ ] Add JWT authentication
+* [ ] Implement refresh tokens
+* [ ] Create unit tests with `pytest`
+* [ ] Add CI/CD using GitHub Actions
+* [ ] Add Docker containerization
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
 **Luccas Santos**
 Backend Developer • Python • Flask • FastAPI • Node.js
@@ -180,16 +212,17 @@ Backend Developer • Python • Flask • FastAPI • Node.js
 
 ---
 
-## 📝 Licença
+## 📝 License
 
-Este projeto está licenciado sob a **MIT License** — veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
 <div align="center">
 
-Feito com 💙 por **Luccas Santos**
-Se gostou, ⭐ o repositório e contribua!
+Made with 💙 by **Luccas Santos**
+If you liked it, ⭐ the repository and contribute!
 
 </div>
-```
+
+---
