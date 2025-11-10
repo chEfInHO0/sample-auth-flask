@@ -67,7 +67,7 @@ def create_app():
         users = Users.query.all()
         return jsonify({"users":[u.to_dict() for u in users]})
     
-    @app.route('/user', methods=['POST'])
+    @app.route('/register', methods=['POST'])
     @login_required
     def post_user():
         if not request.get_json():
