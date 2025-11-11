@@ -40,6 +40,8 @@ def create_app():
 
     @app.route('/login', methods=['POST'])
     def login():
+        if current_user.is_authenticated:
+            return jsonify({"message":"User already logged in"}), 401
         if not request.get_json():
             return jsonify({"message":"Missing content"}),400
         try:
@@ -47,11 +49,11 @@ def create_app():
         except ValidationError as e:
             return jsonify({"message":e.errors()}),400
         user = Users.query.filter_by(username=data.username).first()
-        if user.verify_password(data.password):
+        if user and user.verify_password(data.password):
             login_user(user,remember=environ.get("REMEMBER_USER"))
             return jsonify({"message":"Login Successful"})
         else:
-            return jsonify({"message":"Login Failed"})
+            return jsonify({"message":"Login Failed"}), 400
     
     @app.route('/logout', methods=["POST"])
     @login_required
@@ -60,7 +62,6 @@ def create_app():
         response = jsonify({"message": "Logout successful"})
         response.set_cookie('session', '', expires=0)
         return response, 200
-
 
     @app.route("/user", methods=["GET"])
     def get_user():
@@ -132,8 +133,24 @@ def create_app():
         db.session.commit()
 
         return jsonify({"message": "Password updated successfully"}), 200
-    return app
 
+    @app.route("/user/<int:user_id>", methods=['DELETE'])
+    @login_required
+    def delete_user(user_id):
+        if current_user.id != user_id:
+            return jsonify({"message":"Forbidden"}),403
+        user = Users.query.filter_by(user_id=user_id).first()    
+        db.session.delete(user)
+        db.session.commit()
+
+    @app.errorhandler(405)
+    def method_not_allowed(e):
+        return jsonify({
+            "error": "Method Not Allowed",
+            "message": "This endpoint does not accept the requested method."
+        }), 405
+
+    return app
 
 if __name__ == '__main__':
     app = create_app()
