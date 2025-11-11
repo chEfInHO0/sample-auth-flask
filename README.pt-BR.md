@@ -1,4 +1,3 @@
-
 <div align="center">
 
 [Veja o estado atual do projeto aqui!](https://github.com/chEfInHO0/sample-auth-flask/tree/dev)
@@ -9,9 +8,9 @@ Uma **demo simples de autenticação** desenvolvida com **Flask** e **SQLite**, 
 
 ---
 
-![Python](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python\&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-2.x-black?logo=flask)
-![SQLite](https://img.shields.io/badge/SQLite-Database-07405e?logo=sqlite\&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Database-07405e?logo=sqlite&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-red)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-Active-success)
@@ -129,6 +128,14 @@ sample-auth-flask/
    # Configurações de login persistente
    REMEMBER_COOKIE_DURATION=7    # Dias
    REMEMBER_USER=True
+
+   # Docker-Compose ENV
+
+   MYSQL_ROOT_PASSWORD=MYSQL_PASSWORD
+   MYSQL_DATABASE=MYSQL_DATABASE
+   MYSQL_USER=MYSQL_USER
+   MYSQL_PASSWORD=MYSQL_PASSWORD
+   MYSQL_PORT=MYSQL_PORT
    ```
 
 5. **Inicialize o banco de dados (se necessário)**
@@ -194,11 +201,11 @@ Os logs são salvos automaticamente dentro da pasta `/logs`.
 
 ## 🧭 Roadmap
 
-* [ ] Adicionar autenticação JWT
-* [ ] Implementar refresh tokens
-* [ ] Criar testes unitários com `pytest`
-* [ ] Configurar CI/CD com GitHub Actions
-* [ ] Adicionar containerização com Docker
+- [ ] Adicionar autenticação JWT
+- [ ] Implementar refresh tokens
+- [ ] Criar testes unitários com `pytest`
+- [ ] Configurar CI/CD com GitHub Actions
+- [ ] Adicionar containerização com Docker
 
 ---
 
