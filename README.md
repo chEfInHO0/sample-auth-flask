@@ -128,6 +128,14 @@ sample-auth-flask/
    # Remember-me configuration
    REMEMBER_COOKIE_DURATION=7    # Days
    REMEMBER_USER=True
+
+   # Docker-Compose ENV
+
+   MYSQL_ROOT_PASSWORD=MYSQL_PASSWORD
+   MYSQL_DATABASE=MYSQL_DATABASE
+   MYSQL_USER=MYSQL_USER
+   MYSQL_PASSWORD=MYSQL_PASSWORD
+   MYSQL_PORT=MYSQL_PORT
    ```
 
 5. **Initialize the database (if required)**

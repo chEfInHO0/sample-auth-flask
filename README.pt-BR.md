@@ -128,6 +128,14 @@ sample-auth-flask/
    # Configurações de login persistente
    REMEMBER_COOKIE_DURATION=7    # Dias
    REMEMBER_USER=True
+
+   # Docker-Compose ENV
+
+   MYSQL_ROOT_PASSWORD=MYSQL_PASSWORD
+   MYSQL_DATABASE=MYSQL_DATABASE
+   MYSQL_USER=MYSQL_USER
+   MYSQL_PASSWORD=MYSQL_PASSWORD
+   MYSQL_PORT=MYSQL_PORT
    ```
 
 5. **Inicialize o banco de dados (se necessário)**
