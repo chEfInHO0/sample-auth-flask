@@ -1,9 +1,11 @@
 import logging
+from os import mkdir, listdir
 
 logger = logging.getLogger("sqlErrorHandler")
 logger.setLevel(logging.ERROR)
 
-if not logger.handlers:
+if not logger.handlers: 
+    mkdir('logs') if 'logs' not in listdir() else None
     file_handler = logging.FileHandler('./logs/sqlErrorHandler.log',encoding='utf-8')
     stream_handler = logging.StreamHandler()
     formatter = logging.Formatter(
