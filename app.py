@@ -13,17 +13,19 @@ from os import environ
 
 load_dotenv()
 
+
 def create_app():
     app = Flask(__name__)
     login_manager = LoginManager()
     DURATION = int(environ.get('REMEMBER_COOKIE_DURATION'))
     app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
+    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get(
+        'SQLALCHEMY_DATABASE_URI')
     app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=DURATION)
     app.config.update(
-    SESSION_COOKIE_HTTPONLY = environ.get('SESSION_COOKIE_HTTPONLY'),   
-    SESSION_COOKIE_SECURE = environ.get('SESSION_COOKIE_SECURE'),     
-    SESSION_COOKIE_SAMESITE = environ.get('SESSION_COOKIE_SAMESITE'),
+        SESSION_COOKIE_HTTPONLY=environ.get('SESSION_COOKIE_HTTPONLY'),
+        SESSION_COOKIE_SECURE=environ.get('SESSION_COOKIE_SECURE'),
+        SESSION_COOKIE_SAMESITE=environ.get('SESSION_COOKIE_SAMESITE'),
     )
 
     db.init_app(app)
@@ -36,25 +38,25 @@ def create_app():
 
     @login_manager.unauthorized_handler
     def unauthorized_callback():
-        return jsonify({"message": "User not authenticated"}), 401
+        return jsonify({"message": "Authentication required. Please log in first."}), 401
 
     @app.route('/login', methods=['POST'])
     def login():
         if current_user.is_authenticated:
-            return jsonify({"message":"User already logged in"}), 401
+            return jsonify({"message": "User already logged in"}), 401
         if not request.get_json():
-            return jsonify({"message":"Missing content"}),400
+            return jsonify({"message": "Missing content"}), 400
         try:
             data = UserLogin(**request.get_json())
         except ValidationError as e:
-            return jsonify({"message":e.errors()}),400
-        user = Users.query.filter_by(username=data.username).first()
+            return jsonify({"message": e.errors()}), 400
+        user = Users.query.filter_by(email=data.email).first()
         if user and user.verify_password(data.password):
-            login_user(user,remember=environ.get("REMEMBER_USER"))
-            return jsonify({"message":"Login Successful"})
+            login_user(user, remember=environ.get("REMEMBER_USER"))
+            return jsonify({"message": "Login Successful"})
         else:
-            return jsonify({"message":"Login Failed"}), 400
-    
+            return jsonify({"message": "User or Password incorrect"}), 404
+
     @app.route('/logout', methods=["POST"])
     @login_required
     def logout():
@@ -66,10 +68,10 @@ def create_app():
     @app.route("/user", methods=["GET"])
     def get_user():
         users = Users.query.all()
-        return jsonify({"users":[u.to_dict() for u in users]})
-    
+        return jsonify({"users": [u.to_dict() for u in users]})
+
     @app.route('/register', methods=['POST'])
-    @login_required
+    # @login_required
     def post_user():
         if not request.get_json():
             return jsonify({"message": "Content missing"}), 400
@@ -84,9 +86,9 @@ def create_app():
             db.session.commit()
         except IntegrityError as e:
             error_details = SqlErrorHandler(e).errors()
-            return jsonify(error_details),error_details.get("status_code")
+            return jsonify(error_details), error_details.get("status_code")
         return jsonify({"message": user.to_dict()}), 201
-    
+
     @app.route("/user/<int:user_id>", methods=["PUT"])
     @login_required
     def put_user(user_id):
@@ -98,7 +100,7 @@ def create_app():
         except ValidationError as e:
             return jsonify({"message": e.errors()}), 400
 
-        user = Users.query.get(user_id)
+        user = Users.query.filter_by(user_id=user_id).first()
         if not user:
             return jsonify({"message": "User not found"}), 404
 
@@ -113,7 +115,7 @@ def create_app():
             return jsonify(error_details), error_details.get("status_code")
 
         return jsonify({"message": "User updated successfully", "user": user.to_dict()}), 200
-    
+
     @app.route("/user/<int:user_id>/password", methods=["PATCH"])
     @login_required
     def patch_user_password(user_id):
@@ -125,7 +127,7 @@ def create_app():
         except ValidationError as e:
             return jsonify({"message": e.errors()}), 400
 
-        user = Users.query.get(user_id)
+        user = Users.query.filter_by(user_id=user_id).first()
         if not user:
             return jsonify({"message": "User not found"}), 404
 
@@ -138,10 +140,13 @@ def create_app():
     @login_required
     def delete_user(user_id):
         if current_user.id != user_id:
-            return jsonify({"message":"Forbidden"}),403
-        user = Users.query.filter_by(user_id=user_id).first()    
-        db.session.delete(user)
-        db.session.commit()
+            return jsonify({"message": "You are not authorized to modify this account."}), 403
+        user = Users.query.filter_by(user_id=user_id).first()
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            return "", 204
+        return jsonify({"message": "User not found"}), 404
 
     @app.errorhandler(405)
     def method_not_allowed(e):
@@ -151,6 +156,7 @@ def create_app():
         }), 405
 
     return app
+
 
 if __name__ == '__main__':
     app = create_app()
