@@ -1,4 +1,3 @@
-
 <div align="center">
 
 [Check the current state of the project here!](https://github.com/chEfInHO0/sample-auth-flask/tree/dev)
@@ -9,9 +8,9 @@ A simple **authentication demo** built with **Flask** and **SQLite**, showcasing
 
 ---
 
-![Python](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python\&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-2.x-black?logo=flask)
-![SQLite](https://img.shields.io/badge/SQLite-Database-07405e?logo=sqlite\&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Database-07405e?logo=sqlite&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-red)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-Active-success)
@@ -194,11 +193,11 @@ Logs are automatically saved in the `/logs` directory.
 
 ## 🧭 Roadmap
 
-* [ ] Add JWT authentication
-* [ ] Implement refresh tokens
-* [ ] Create unit tests with `pytest`
-* [ ] Add CI/CD using GitHub Actions
-* [ ] Add Docker containerization
+- [ ] Add JWT authentication
+- [ ] Implement refresh tokens
+- [ ] Create unit tests with `pytest`
+- [ ] Add CI/CD using GitHub Actions
+- [ ] Add Docker containerization
 
 ---
 
