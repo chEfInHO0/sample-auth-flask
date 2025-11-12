@@ -1,6 +1,6 @@
-from database import db
+from app.extensions import db
 from app import create_app
-from models.users import Users
+from app.models.users import Users
 
 app = create_app()
 

@@ -1,4 +1,4 @@
-from database import db
+from app.extensions import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -9,6 +9,7 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80), nullable=False, unique=True)
     password_hash = db.Column(db.String(256), nullable=False)  # 🔹 alterado
+    role = db.Column(db.String(80), nullable=False, default='user')
 
     def __repr__(self):
         return f"{self.user_id} - {self.username} - {self.email}"
@@ -17,7 +18,8 @@ class Users(db.Model, UserMixin):
         return {
             "user_id": self.user_id,
             "username": self.username,
-            "email": self.email
+            "email": self.email,
+            "role": self.role
         }
 
     @property
